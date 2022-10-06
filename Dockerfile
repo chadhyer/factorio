@@ -6,7 +6,7 @@ ENV FACTORIO_URL=https://factorio.com/get-download/${FACTORIO_VERSION}/headless/
     FACTORIO_COMPRESSED=factorio_headless_x64_${FACTORIO_VERSION}.tar.xz
 
 # Install basics
-RUN apt update && apt install -y wget xz-utils net-tools vim fail2ban
+RUN apt update && apt install -y wget xz-utils net-tools vim
 
 # Obtain/Uncompress Factorio server Files
 WORKDIR /usr/local
