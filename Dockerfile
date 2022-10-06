@@ -14,8 +14,8 @@ RUN wget -O ${FACTORIO_COMPRESSED} ${FACTORIO_URL} &&\
     tar -xf ./${FACTORIO_COMPRESSED} && \
     rm -rf ${FACTORIO_COMPRESSED}
 
-COPY ./factorio_entrypoint.sh /usr/local/factorio
-RUN chmod +x /usr/local/factorio/factorio_entrypoint.sh
+COPY ./factorio-entrypoint.sh /usr/local/factorio
+RUN chmod +x /usr/local/factorio/factorio-entrypoint.sh
 
 # Create User/Group that will execute the server
 RUN groupadd factorio && useradd -rm -d /usr/local/factorio -g factorio factorio &&\
@@ -64,4 +64,4 @@ COPY ./server-settings.json /usr/local/factorio/data/server-settings.json
 
 # Start Server
 EXPOSE 34197/udp
-ENTRYPOINT ["./factorio_entrypoint.sh"]
+ENTRYPOINT ["./factorio-entrypoint.sh"]
