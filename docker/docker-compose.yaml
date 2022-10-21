@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  factorio_server:
+    build: .
+    ports:
+      - "24197:24197/udp"
+      - "27015:27015/tcp"
+    restart: unless-stopped
+    volumes:
+      - /opt/factorio:/factorio
+    environment:
+      - DEBUG=true
+    # entrypoint: "tail -f /dev/null"
