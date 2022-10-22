@@ -179,7 +179,7 @@ def generate_new_save(
 
 def update_map_gen_settings(
         template:str=f"{environ.get('DATA')}/map-gen-settings.example.json",
-        map_gen_settings:str=f"{environ.get('CONFIG')}/map-gen-settings.json"
+        map_gen_settings_file:str=f"{environ.get('CONFIG')}/map-gen-settings.json"
     ):
     """
     Generate/update map-gen-settings.json file
@@ -190,7 +190,7 @@ def update_map_gen_settings(
         Default: f"{environ.get('DATA')}/map-gen-settings.example.json"
         Description: Location of template map-gen-settings.example.json file
 
-    map_gen_settings (str)
+    map_gen_settings_file (str)
         Default: f"{environ.get('CONFIG')}/map-gen-settings.json"
         Description: Location of map-gen-settings.json file
 
@@ -199,14 +199,91 @@ def update_map_gen_settings(
     None
     """
 
-    # Future update will add ENV VAR support to update map-gen-settings
-    if not path.exists(map_gen_settings):
-        shutil.copyfile(template, map_gen_settings)
+    env_map_gen_settings = {
+        'terrain_segmentation': environ.get('TERRAIN_SEGMENTATION', 1),
+        'water': environ.get('WATER', 1),
+        'width': environ.get('WIDTH', 0),
+        'height': environ.get('HEIGHT', 0),
+        'starting_area': environ.get('STARTING_AREA', 1),
+        'peaceful_mode': environ.get('PEAVEFUL_MODE', False),
+        'autoplace_controls': {
+            'coal': {
+                'frequency': environ.get('COAL_FREQUENCY', 1),
+                'size': environ.get('COAL_SIZE', 1),
+                'richness': environ.get('COAL_RICHNESS', 1)
+            },
+            'stone': {
+                'frequency': environ.get('STONE_FREQUENCY', 1),
+                'size': environ.get('STONE_SIZE', 1),
+                'richness': environ.get('STONE_RICHNESS', 1)
+            },
+            'copper-ore': {
+                'frequency': environ.get('COPPER_FREQUENCY', 1),
+                'size': environ.get('COPPER_SIZE', 1),
+                'richness': environ.get('COPPER_RICHNESS', 1)
+            },
+            'iron-ore': {
+                'frequency': environ.get('IRON_FREQUENCY', 1),
+                'size': environ.get('IRON_SIZE', 1),
+                'richness': environ.get('IRON_RICHNESS', 1)
+            },
+            'uranium-ore': {
+                'frequency': environ.get('URANIUM_FREQUENCY', 1),
+                'size': environ.get('URANIUM_SIZE', 1),
+                'richness': environ.get('URANIUM_RICHNESS', 1)
+            },
+            'crude-ore': {
+                'frequency': environ.get('CRUDE_FREQUENCY', 1),
+                'size': environ.get('CRUDE_SIZE', 1),
+                'richness': environ.get('CRUDE_RICHNESS', 1)
+            },
+            'trees': {
+                'frequency': environ.get('TREES_FREQUENCY', 1),
+                'size': environ.get('TREES_SIZE', 1),
+                'richness': environ.get('TREES_RICHNESS', 1)
+            },
+            'enemy-base': {
+                'frequency': environ.get('ENEMY_FREQUENCY', 1),
+                'size': environ.get('ENEMY_SIZE', 1),
+                'richness': environ.get('ENEMY_RICHNESS', 1)
+            }
+        },
+        'cliff_settings': {
+            'name': 'cliff',
+            'cliff_elevation_0': environ.get('CLIFF_ELEVATION_0', 10),
+            'cliff_elevation_interval': environ.get('CLIFF_ELEVATION_INTERVAL', 40),
+            'richness': environ.get('CLIFF_RICHNESS', 1)
+        },
+        'property_expression_names': {
+            'control-setting:moisture:frequency:multiplier': environ.get('MOISTURE_FREQUENCY', "1"),
+            'control-setting:moisture:bias': environ.get('MOISTURE_BIAS', "0"),
+            'control-setting:aux:frequency:multiplier': environ.get('AUX_FREQUENCY', "1"),
+            'control-setting:aux:bias': environ.get('AUX_BIAS', "0")
+        },
+        'starting_points': [
+            {
+                'x': environ.get('STARTING_POINTS_X', 0),
+                'y': environ.get('STARTING_POINTS_Y', 0),
+            }
+        ],
+        'seed': environ.get('SEED', None)
+    }
+
+    with open(template, 'r') as file:
+        template_settings = json.load(file)
+
+    map_gen_settings = template_settings
+
+    for key, value in env_map_gen_settings.items():
+        map_gen_settings[key] = value
+
+    with open(map_gen_settings_file, 'w', encoding='utf-8') as file:
+        json.dump(map_gen_settings, file, ensure_ascii=False, indent=4)
 
 
 def update_map_settings(
         template:str=f"{environ.get('DATA')}/map-settings.example.json",
-        map_settings:str=f"{environ.get('CONFIG')}/map-settings.json"
+        map_settings_file:str=f"{environ.get('CONFIG')}/map-settings.json"
     ):
     """
     Generate/update map-settings.json
@@ -215,7 +292,7 @@ def update_map_settings(
         Default: f"{environ.get('DATA')}/map-settings.example.json"
         Description: Location of template map-settings.example.json file
 
-    map_settings (str)
+    map_settings_file (str)
         Default: f"{environ.get('CONFIG')}/map-settings.json"
         Description: Location of map-settings.json file to use while generating
             a new save file
@@ -225,7 +302,190 @@ def update_map_settings(
     None
     """
 
-    # Future update will add ENV VAR support to update map-settings.json
-    if not path.exists(map_settings):
-        shutil.copyfile(template, map_settings)
+    env_map_settings = {
+        'difficulty_settings': {
+            'recipe_difficulty': environ.get('RECIPE_DIFFICULTY', 0),
+            'technology_difficulty': environ.get('TECHNOLOGY_DIFFICULTY', 0),
+            'technology_price_multiplier': environ.get(
+                'TECHNOLOGY_PRICE_MULTIPLIER', 1),
+            'research_queue_setting': environ.get(
+                'RESEARCH_QUEUE_SETTING', 'after-victory'),
+        },
+        'pollution': {
+            'enabled': environ.get('POLLUTION_ENABLED', True),
+            'diffusion_ratio': environ.get('DIFFUSION_RATIO', 0.02),
+            'min_to_diffuse': environ.get('MIN_TO_DIFFUSE', 15),
+            'ageing': environ.get('AGEING', 1),
+            'expected_max_per_chunk': environ.get(
+                'EXPECTED_MAX_PER_CHUNK', 150),
+            'min_to_show_per_chunk': environ.get(
+                'MIN_TO_SHOW_PER_CHUNK', 50),
+            'min_pollution_to_damage_trees': environ.get(
+                'MIN_POLLUTION_TO_DAMAGE_TREES', 60),
+            'pollution_with_max_forest_damage': environ.get(
+                'POLLUTION_WITH_MAX_FOREST_DAMAGE', 150),
+            'pollution_per_tree_damage': environ.get(
+                'POLLUTION_PER_TREE_DAMAGE', 50),
+            'pollution_restored_per_tree_damage': environ.get(
+                'POLLUTION_RESTORED_PER_TREE_DAMAGE', 10),
+            'max_pollution_to_restore_trees': environ.get(
+                'MAX_POLLUTION_TO_RESTORE_TREES', 20),
+            'enemy_attack_pollution_consumption_modifier': environ.get(
+                'ENEMY_ATTACK_POLLUTION_CONSUMPTION_MODIFIER', 1)
+        },
+        'enemy_evolution': {
+            'enabled': environ.get('ENEMY_EVOLUTION_ENABLED', True),
+            'time_factor': environ.get(
+                'TIME_FACTOR', 0.000004),
+            'destroy_factor': environ.get(
+                'DESTROY_FACTOR', 0.002),
+            'pollution_factor': environ.get(
+                'POLLUTION_FACTOR', 0.0000009)
+        },
+        'enemy_expansion': {
+            'enabled': environ.get('ENEMY_EXPANSION_ENABLED', True),
+            'min_base_spacing': environ.get(
+                'MIN_BASE_SPACING', 3),
+            'max_expansion_distance': environ.get(
+                'MAX_EXPANSION_DISTANCE', 7),
+            'friendly_base_influence_radius': environ.get(
+                'FRIENDLY_BASE_INFLUENCE_RADIUS', 2),
+            'enemy_building_influence_radius': environ.get(
+                'ENEMY_BUILDING_INFLUENCE_RADIUS', 2),
+            'building_coefficient': environ.get(
+                'BUILDING_COEFFICIENT', 0.1),
+            'other_base_coefficient': environ.get(
+                'OTHER_BASE_COEFFICIENT', 2.0),
+            'neighbouring_chunk_coefficient': environ.get(
+                'NEIGHBOURING_CHUNK_COEFFICIENT', 0.5),
+            'neighbouring_base_chunk_coefficient': environ.get(
+                'NEIGHBOURING_BASE_CHUNK_COEFFICIENT', 0.4),
+            'max_colliding_tiles_coefficient': environ.get(
+                'MAX_COLLIDING_TILES_COEFFICIENT', 0.9),
+            'settler_group_min_size': environ.get(
+                'SETTLER_GROUP_MIN_SIZE', 5),
+            'settler_group_max_size': environ.get(
+                'SETTLER_GROUP_MAX_SIZE', 20),
+            'min_expansion_cooldown': environ.get(
+                'MIN_EXPANSION_COOLDOWN', 14400),
+            'max_expansion_cooldown': environ.get(
+                'MAX_EXPANSION_COOLDOWN', 216000)
+        },
+        'unit_group': {
+            'min_group_gathering_time': environ.get(
+                'MIN_GROUP_GATHERING_TIME', 3600),
+            'max_group_gathering_time': environ.get(
+                'MAX_GROUP_GATHERING_TIME', 36000),
+            'max_wait_time_for_late_members': environ.get(
+                'MAX_WAIT_TIME_FOR_LATE_MEMBERS', 7200),
+            'max_group_radius': environ.get('MAX_GROUP_RADIUS', 30.0),
+            'min_group_radius': environ.get('MIN_GROUP_RADIUS', 5.0),
+            'max_member_speedup_when_behind': environ.get(
+                'MAX_MEMBER_SPEEDUP_WHEN_BEHIND', 1.4),
+            'max_member_slowdown_when_ahead': environ.get(
+                'MAX_MEMBER_SLOWDOWN_WHEN_AHEAD', 0.6),
+            'max_group_slowdown_factor': environ.get(
+                'MAX_GROUP_SLOWDOWN_FACTOR', 0.3),
+            'max_group_member_fallback_factor': environ.get(
+                'MAX_GROUP_MEMBER_FALLBACK_FACTOR', 3),
+            'member_disown_distance': environ.get(
+                'MEMBER_DISOWN_DISTANCE', 10),
+            'tick_tolerance_when_member_arrives': environ.get(
+                'TICK_TOLERANCE_WHEN_MEMBER_ARRIVES', 60),
+            'max_gathering_unit_groups': environ.get(
+                'MAX_GATHERING_UNIT_GROUPS', 30),
+            'max_unit_group_size': environ.get('MAX_UNIT_GROUP_SIZE', 200)
+        },
+        'steering': {
+            'default': {
+                'radius': environ.get('STEERING_RADIUS', 1.2),
+                'separation_force': environ.get(
+                    'STEERING_SEPARATION_FORCE', 0.005),
+                'separation_factor': environ.get(
+                    'STEERING_SEPARATION_FACTOR', 1.2),
+                'force_unit_fuzzy_goto_behavior': environ.get(
+                    'STEERING_UNIT_FUZZY_GOTO_BEHAVIOR', False)
+            },
+            'moving': {
+                'radius': environ.get('MOVING_RADIUS', 3),
+                'separation_force': environ.get(
+                    'MOVING_SEPARATION_FORCE', 0.01),
+                'separation_factor': environ.get(
+                    'MOVING_SEPARATION_FACTOR', 3),
+                'force_unit_fuzzy_goto_behavior': environ.get(
+                    'MOVING_FORCE_UNIT_FUZZY_GOTO_BEHAVIOR', False)
+            }
+        },
+        'path_finder': {
+            'fwd2bwd_ratio': environ.get('FWD2BWD_RATIO', 5),
+            'goal_pressure_ratio': environ.get('GOAL_PRESSURE_RATIO', 2),
+            'max_steps_worked_per_tick': environ.get(
+                'MAX_STEPS_WORKED_PER_TICK', 100),
+            'max_work_done_per_tick': environ.get(
+                'MAX_WORK_DONE_PER_TICK', 8000),
+            'use_path_cache': environ.get('USE_PATH_CACHE', True),
+            'short_cache_size': environ.get('SHORT_CACHE_SIZE', 5),
+            'long_cache_size': environ.get('LONG_CACHE_SIZE', 25),
+            'short_cache_min_cacheable_distance': environ.get(
+                'SHORT_CACHE_MIN_CACHEABLE_DISTANCE', 10),
+            'short_cache_min_algo_steps_to_cache': environ.get(
+                'SHORT_CACHE_MIN_ALGO_STEPS_TO_CACHE', 50),
+            'long_cache_min_cacheable_distance': environ.get(
+                'LONG_CACHE_MIN_CACHEABLE_DISTANCE', 30),
+            'cache_max_connect_to_cache_steps_multiplier': environ.get(
+                'CACHE_MAX_CONNECT_TO_CACHE_STEPS_MULTIPLIER', 100),
+            'cache_accept_path_start_distance_ratio': environ.get(
+                'CACHE_ACCEPT_PATH_START_DISTANCE_RATIO', 0.2),
+            'cache_accept_path_end_distance_ratio': environ.get(
+                'CACHE_ACCEPT_PATH_END_DISTANCE_RATIO', 0.15),
+            'negative_cache_accept_path_start_distance_ratio': environ.get(
+                'NEGATIVE_CACHE_ACCEPT_PATH_START_DISTANCE_RATIO', 0.3),
+            'negative_cache_accept_path_end_distance_ratio': environ.get(
+                'NEGATIVE_CACHE_ACCEPT_PATH_END_DISTANCE_RATIO', 0.3),
+            'cache_path_start_distance_rating_multiplier': environ.get(
+                'CACHE_PATH_START_DISTANCE_RATING_MULTIPLIER', 10),
+            'cache_path_end_distance_rating_multiplier': environ.get(
+                'CACHE_PATH_END_DISTANCE_RATING_MULTIPLIER', 20),
+            'stale_enemy_with_same_destination_collision_penalty': environ.get(
+                'STALE_ENEMY_WITH_SAME_DESTINATION_COLLISION_PENALTY', 30),
+            'ignore_moving_enemy_collision_distance': environ.get(
+                'IGNORE_MOVING_ENEMY_COLLISION_DISTANCE', 5),
+            'enemy_with_different_destination_collision_penalty': environ.get(
+                'ENEMY_WITH_DIFFERENT_DESTINATION_COLLISION_PENALTY', 30),
+            'general_entity_collision_penalty': environ.get(
+                'GENERAL_ENTITY_COLLISION_PENALTY', 10),
+            'general_entity_subsequent_collision_penalty': environ.get(
+                'GENERAL_ENTITY_SUBSEQUENT_COLLISION_PENALTY', 3),
+            'extended_collision_penalty': environ.get(
+                'EXTENDED_COLLISION_PENALTY', 3),
+            'max_clients_to_accept_any_new_request': environ.get(
+                'MAX_CLIENTS_TO_ACCEPT_ANY_NEW_REQUEST', 10),
+            'max_clients_to_accept_short_new_request': environ.get(
+                'MAX_CLIENTS_TO_ACCEPT_SHORT_NEW_REQUEST', 100),
+            'direct_distance_to_consider_short_request': environ.get(
+                'DIRECT_DISTANCE_TO_CONSIDER_SHORT_REQUEST', 100),
+            'short_request_max_steps': environ.get(
+                'SHORT_REQUEST_MAX_STEPS', 1000),
+            'short_request_ratio': environ.get('SHORT_REQUEST_RATIO', 0.5),
+            'min_steps_to_check_path_find_termination': environ.get(
+                'MIN_STEPS_TO_CHECK_PATH_FIND_TERMINATION', 2000),
+            'start_to_goal_cost_multiplier_to_terminate_path_find': environ.get(
+                'START_TO_GOAL_COST_MULTIPLIER_TO_TERMINATE_PATH_FIND', 500.0),
+            'overload_levels': [0, 100, 500],
+            'overload_multipliers': [2, 3, 4],
+            'negative_path_cache_delay_interval': environ.get(
+                'NEGATIVE_PATH_CACHE_DELAY_INTERVAL', 20)
+        },
+        'max_failed_behavior_count': 3
+    }
 
+    with open(template, 'r') as file:
+        template_settings = json.load(file)
+
+    map_settings = template_settings
+
+    for key, value in env_map_settings.items():
+        map_settings[key] = value
+
+    with open(map_settings_file, 'w', encoding='utf-8') as file:
+        json.dump(map_settings, file, ensure_ascii=False, indent=4)
