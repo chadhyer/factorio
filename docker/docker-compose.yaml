@@ -8,7 +8,10 @@ services:
       - "27015:27015/tcp"
     restart: unless-stopped
     volumes:
-      - /opt/factorio:/factorio
+      - factorio:/factorio
     environment:
-      - DEBUG=true
+      - GENERATE_NEW_SAVE=true
+    #   - DEBUG=true
     # entrypoint: "tail -f /dev/null"
+volumes:
+  factorio:
