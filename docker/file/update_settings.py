@@ -1,5 +1,6 @@
 from os import environ, remove, path, system
-import json, secrets, string, glob, shutil
+import json, secrets, string, glob
+import logging
 
 
 def update_server_settings(
@@ -24,6 +25,7 @@ def update_server_settings(
     None
     """
 
+    logging.info('updating server settings...')
     env_server_settings = {
         'name': environ.get('NAME', 'MyFactorioServer'),
         'description': environ.get('DESCRIPTION', 'A factorio server!'),
@@ -86,6 +88,7 @@ def generate_rcon_passwd(
     """
 
     if not path.exists(rcon_passwd_file):
+        logging.info('generating rcon server password...')
         alphabet = string.ascii_letters + string.digits
         rcon_passwd = ''.join(secrets.choice(alphabet) for i in range(20))
 
@@ -121,6 +124,7 @@ def delete_temp_save(
         Description: REGEX pattern to find tmp save files
     """
 
+    logging.info('deleting temp saves...')
     temp_save = f'{SAVE}/{SAVE_NAME}{temp_file_pattern}'
 
     for file in glob.glob(temp_save):
@@ -129,7 +133,7 @@ def delete_temp_save(
 
 def generate_new_save(
         SAVE:str=environ.get('SAVE'),
-        SAVE_NAME:str=environ.get('SAVE_FILE', 'world'),
+        SAVE_NAME:str=environ.get('SAVE_NAME', 'world'),
         GENERATE_NEW_SAVE:bool=environ.get('GENERATE_NEW_SAVE', False),
         map_gen_settings:str=f"{environ.get('CONFIG')}/map-gen-settings.json",
         map_settings:str=f"{environ.get('CONFIG')}/map-settings.json"
@@ -166,9 +170,13 @@ def generate_new_save(
     None
     """
 
-    if GENERATE_NEW_SAVE:
+    logging.debug(f'GENERATE_NEW_SAVE={GENERATE_NEW_SAVE}')
+    if GENERATE_NEW_SAVE != False:
+        logging.info('generating new save...')
         save_path = f'{SAVE}/{SAVE_NAME}.zip'
         if path.exists(save_path):
+            logging.info(
+                f'Map {save_path} already exists, skipping map generation')
             print(f'Map {save_path} already exists, skipping map generation')
         else:
             system(f'/opt/factorio/bin/x64/factorio \
@@ -199,6 +207,7 @@ def update_map_gen_settings(
     None
     """
 
+    logging.info('updating map gen settings...')
     env_map_gen_settings = {
         'terrain_segmentation': environ.get('TERRAIN_SEGMENTATION', 1),
         'water': environ.get('WATER', 1),
@@ -232,7 +241,7 @@ def update_map_gen_settings(
                 'size': environ.get('URANIUM_SIZE', 1),
                 'richness': environ.get('URANIUM_RICHNESS', 1)
             },
-            'crude-ore': {
+            'crude-oil': {
                 'frequency': environ.get('CRUDE_FREQUENCY', 1),
                 'size': environ.get('CRUDE_SIZE', 1),
                 'richness': environ.get('CRUDE_RICHNESS', 1)
@@ -302,6 +311,7 @@ def update_map_settings(
     None
     """
 
+    logging.info('updating map settings...')
     env_map_settings = {
         'difficulty_settings': {
             'recipe_difficulty': environ.get('RECIPE_DIFFICULTY', 0),
