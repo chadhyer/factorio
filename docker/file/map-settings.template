@@ -1,0 +1,120 @@
+{
+  "difficulty_settings":
+  {
+    "recipe_difficulty": ${RECIPE_DIFFICULTY},
+    "technology_difficulty": ${TECHNOLOGY_DIFFICULTY},
+    "technology_price_multiplier": ${TECHNOLOGY_PRICE_MULTIPLIER},
+    "research_queue_setting": "${RESEARCH_QUEUE_SETTING}"
+  },
+  "pollution":
+  {
+    "enabled": ${POLLUTION_ENABLED},
+    "_comment_min_to_diffuse_1": "these are values for 60 ticks (1 simulated second)",
+    "_comment_min_to_diffuse_2": "amount that is diffused to neighboring chunk",
+    "diffusion_ratio": ${DIFFUSION_RATIO},
+    "min_to_diffuse": ${MIN_TO_DIFFUSE},
+    "ageing": ${AGEING},
+    "expected_max_per_chunk": ${EXPECTED_MAX_PER_CHUNK},
+    "min_to_show_per_chunk": ${MIN_TO_SHOW_PER_CHUNK},
+    "min_pollution_to_damage_trees": ${MIN_POLLUTION_TO_DAMAGE_TREES},
+    "pollution_with_max_forest_damage": ${POLLUTION_WITH_MAX_FOREST_DAMAGE},
+    "pollution_per_tree_damage": ${POLLUTION_PER_TREE_DAMAGE},
+    "pollution_restored_per_tree_damage": ${POLLUTION_RESTORED_PER_TREE_DAMAGE},
+    "max_pollution_to_restore_trees": ${MAX_POLLUTION_TO_RESTORE_TREES},
+    "enemy_attack_pollution_consumption_modifier": ${ENEMY_ATTACK_POLLUTION_CONSUMPTION_MODIFIER}
+  },
+  "enemy_evolution":
+  {
+    "enabled": ${ENEMY_EVOLUTION_ENABLED},
+    "time_factor": ${TIME_FACTOR},
+    "destroy_factor": ${DESTROY_FACTOR},
+    "pollution_factor": ${POLLUTION_FACTOR}
+  },
+  "enemy_expansion":
+  {
+    "enabled": ${ENEMY_EXPANSION_ENABLED},
+    "min_base_spacing": ${MIN_BASE_SPACING},
+    "max_expansion_distance": ${MAX_EXPANSION_DISTANCE},
+    "friendly_base_influence_radius": ${FRIENDLY_BASE_INFLUENCE_RADIUS},
+    "enemy_building_influence_radius": ${ENEMY_BUILDING_INFLUENCE_RADIUS},
+    "building_coefficient": ${BUILDING_COEFFICIENT},
+    "other_base_coefficient": ${OTHER_BASE_COEFFICIENT},
+    "neighbouring_chunk_coefficient": ${NEIGHBOURING_CHUNK_COEFFICIENT},
+    "neighbouring_base_chunk_coefficient": ${NEIGHBOURING_BASE_CHUNK_COEFFICIENT},
+    "max_colliding_tiles_coefficient": ${MAX_COLLIDING_TILES_COEFFICIENT},
+    "settler_group_min_size": ${SETTLER_GROUP_MIN_SIZE},
+    "settler_group_max_size": ${SETTLER_GROUP_MAX_SIZE},
+    "min_expansion_cooldown": ${MIN_EXPANSION_COOLDOWN},
+    "max_expansion_cooldown": ${MAX_EXPANSION_COOLDOWN}
+  },
+  "unit_group":
+  {
+    "min_group_gathering_time": ${MIN_GROUP_GATHERING_TIME},
+    "max_group_gathering_time": ${MAX_GROUP_GATHERING_TIME},
+    "max_wait_time_for_late_members": ${MAX_WAIT_TIME_FOR_LATE_MEMBERS},
+    "max_group_radius": ${MAX_GROUP_RADIUS},
+    "min_group_radius": ${MIN_GROUP_RADIUS},
+    "max_member_speedup_when_behind": ${MAX_MEMBER_SPEEDUP_WHEN_BEHIND},
+    "max_member_slowdown_when_ahead": ${MAX_MEMBER_SLOWDOWN_WHEN_AHEAD},
+    "max_group_slowdown_factor": ${MAX_GROUP_SLOWDOWN_FACTOR},
+    "max_group_member_fallback_factor": ${MAX_GROUP_MEMBER_FALLBACK_FACTOR},
+    "member_disown_distance": ${MEMBER_DISOWN_DISTANCE},
+    "tick_tolerance_when_member_arrives": ${TICK_TOLERANCE_WHEN_MEMBER_ARRIVES},
+    "max_gathering_unit_groups": ${MAX_GATHERING_UNIT_GROUPS},
+    "max_unit_group_size": ${MAX_UNIT_GROUP_SIZE}
+  },
+  "steering":
+  {
+    "default":
+    {
+      "radius": ${STEERING_RADIUS},
+      "separation_force": ${STEERING_SEPARATION_FORCE},
+      "separation_factor": ${STEERING_SEPARATION_FACTOR},
+      "force_unit_fuzzy_goto_behavior": ${STEERING_UNIT_FUZZY_GOTO_BEHAVIOR}
+    },
+    "moving":
+    {
+      "radius": ${MOVING_RADIUS},
+      "separation_force": ${MOVING_SEPARATION_FORCE},
+      "separation_factor": ${MOVING_SEPARATION_FACTOR},
+      "force_unit_fuzzy_goto_behavior": ${MOVING_FORCE_UNIT_FUZZY_GOTO_BEHAVIOR}
+    }
+  },
+  "path_finder":
+  {
+    "fwd2bwd_ratio": ${FWD2BWD_RATIO},
+    "goal_pressure_ratio": ${GOAL_PRESSURE_RATIO},
+    "max_steps_worked_per_tick": ${MAX_STEPS_WORKED_PER_TICK},
+    "max_work_done_per_tick": ${MAX_WORK_DONE_PER_TICK},
+    "use_path_cache": ${USE_PATH_CACHE},
+    "short_cache_size": ${SHORT_CACHE_SIZE},
+    "long_cache_size": ${LONG_CACHE_SIZE},
+    "short_cache_min_cacheable_distance": ${SHORT_CACHE_MIN_CACHEABLE_DISTANCE},
+    "short_cache_min_algo_steps_to_cache": ${SHORT_CACHE_MIN_ALGO_STEPS_TO_CACHE},
+    "long_cache_min_cacheable_distance": ${LONG_CACHE_MIN_CACHEABLE_DISTANCE},
+    "cache_max_connect_to_cache_steps_multiplier": ${CACHE_MAX_CONNECT_TO_CACHE_STEPS_MULTIPLIER},
+    "cache_accept_path_start_distance_ratio": ${CACHE_ACCEPT_PATH_START_DISTANCE_RATIO},
+    "cache_accept_path_end_distance_ratio": ${CACHE_ACCEPT_PATH_END_DISTANCE_RATIO},
+    "negative_cache_accept_path_start_distance_ratio": ${NEGATIVE_CACHE_ACCEPT_PATH_START_DISTANCE_RATIO},
+    "negative_cache_accept_path_end_distance_ratio": ${NEGATIVE_CACHE_ACCEPT_PATH_END_DISTANCE_RATIO},
+    "cache_path_start_distance_rating_multiplier": ${CACHE_PATH_START_DISTANCE_RATING_MULTIPLIER},
+    "cache_path_end_distance_rating_multiplier": ${CACHE_PATH_END_DISTANCE_RATING_MULTIPLIER},
+    "stale_enemy_with_same_destination_collision_penalty": ${STALE_ENEMY_WITH_SAME_DESTINATION_COLLISION_PENALTY},
+    "ignore_moving_enemy_collision_distance": ${IGNORE_MOVING_ENEMY_COLLISION_DISTANCE},
+    "enemy_with_different_destination_collision_penalty": ${ENEMY_WITH_DIFFERENT_DESTINATION_COLLISION_PENALTY},
+    "general_entity_collision_penalty": ${GENERAL_ENTITY_COLLISION_PENALTY},
+    "general_entity_subsequent_collision_penalty": ${GENERAL_ENTITY_SUBSEQUENT_COLLISION_PENALTY},
+    "extended_collision_penalty": ${EXTENDED_COLLISION_PENALTY},
+    "max_clients_to_accept_any_new_request": ${MAX_CLIENTS_TO_ACCEPT_ANY_NEW_REQUEST},
+    "max_clients_to_accept_short_new_request": ${MAX_CLIENTS_TO_ACCEPT_SHORT_NEW_REQUEST},
+    "direct_distance_to_consider_short_request": ${DIRECT_DISTANCE_TO_CONSIDER_SHORT_REQUEST},
+    "short_request_max_steps": ${SHORT_REQUEST_MAX_STEPS},
+    "short_request_ratio": ${SHORT_REQUEST_RATIO},
+    "min_steps_to_check_path_find_termination": ${MIN_STEPS_TO_CHECK_PATH_FIND_TERMINATION},
+    "start_to_goal_cost_multiplier_to_terminate_path_find": ${START_TO_GOAL_COST_MULTIPLIER_TO_TERMINATE_PATH_FIND},
+    "overload_levels": [${OVERLOAD_LEVELS}],
+    "overload_multipliers": [${OVERLOAD_MULTIPLIERS}],
+    "negative_path_cache_delay_interval": ${NEGATIVE_PATH_CACHE_DELAY_INTERVAL}
+  },
+  "max_failed_behavior_count": ${MAX_FAILED_BEHAVIOR_COUNT}
+}

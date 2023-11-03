@@ -1,0 +1,110 @@
+{
+  "_terrain_segmentation_comment": "The inverse of 'water scale' in the map generator GUI.",
+  "terrain_segmentation": ${TERRAIN_SEGMENTATION},
+
+  "_water_comment":
+  [
+    "The equivalent to 'water coverage' in the map generator GUI. Higher coverage means more water in larger oceans.",
+    "Water level = 10 * log2(this value)"
+  ],
+  "water": ${WATER},
+
+  "_comment_width+height": "Width and height of map, in tiles; 0 means infinite",
+  "width": ${WIDTH},
+  "height": ${HEIGHT},
+
+  "_starting_area_comment": "Multiplier for 'biter free zone radius'",
+  "starting_area": ${STARTING_AREA},
+
+  "peaceful_mode": ${PEAVEFUL_MODE},
+  "autoplace_controls":
+  {
+    "coal": {
+      "frequency": ${COAL_FREQUENCY},
+			"size": ${COAL_SIZE},
+			"richness": ${COAL_RICHNESS}
+		},
+    "stone": {
+			"frequency": ${STONE_FREQUENCY},
+			"size": ${STONE_SIZE},
+			"richness": ${STONE_RICHNESS}
+		},
+    "copper-ore": {
+			"frequency": ${COPPER_FREQUENCY},
+			"size": ${COPPER_SIZE},
+			"richness": ${COPPER_RICHNESS}
+		},
+    "iron-ore": {
+			"frequency": ${IRON_FREQUENCY},
+			"size": ${IRON_SIZE},
+			"richness": ${IRON_RICHNESS}
+		},
+    "uranium-ore": {
+			"frequency": ${URANIUM_FREQUENCY},
+			"size": ${URANIUM_SIZE},
+			"richness": ${URANIUM_RICHNESS}
+		},
+    "crude-oil": {
+			"frequency": ${CRUDE_FREQUENCY},
+			"size": ${CRUDE_SIZE},
+			"richness": ${CRUDE_RICHNESS}
+		},
+    "trees": {
+			"frequency": ${TREES_FREQUENCY},
+			"size": ${TREES_SIZE},
+			"richness": ${TREES_RICHNESS}
+		},
+    "enemy-base": {
+			"frequency": ${ENEMY_FREQUENCY},
+			"size": ${ENEMY_SIZE},
+			"richness": ${ENEMY_RICHNESS}
+		}
+  },
+
+  "cliff_settings":
+  {
+    "_name_comment": "Name of the cliff prototype",
+    "name": "cliff",
+
+    "_cliff_elevation_0_comment": "Elevation of first row of cliffs",
+    "cliff_elevation_0": ${CLIFF_ELEVATION_0},
+
+    "_cliff_elevation_interval_comment":
+    [
+      "Elevation difference between successive rows of cliffs.",
+      "This is inversely proportional to 'frequency' in the map generation GUI. Specifically, when set from the GUI the value is 40 / frequency."
+    ],
+    "cliff_elevation_interval": ${CLIFF_ELEVATION_INTERVAL},
+
+    "_richness_comment": "Called 'cliff continuity' in the map generator GUI. 0 will result in no cliffs, 10 will make all cliff rows completely solid",
+    "richness": ${CLIFF_RICHNESS}
+  },
+
+  "_property_expression_names_comment":
+  [
+    "Overrides for property value generators (map type)",
+    "Leave 'elevation' blank to get 'normal' terrain.",
+    "Use 'elevation': '0_16-elevation' to reproduce terrain from 0.16.",
+    "Use 'elevation': '0_17-island' to get an island.",
+    "Moisture and terrain type are also controlled via this.",
+    "'control-setting:moisture:frequency:multiplier' is the inverse of the 'moisture scale' in the map generator GUI.",
+    "'control-setting:moisture:bias' is the 'moisture bias' in the map generator GUI.",
+    "'control-setting:aux:frequency:multiplier' is the inverse of the 'terrain type scale' in the map generator GUI.",
+    "'control-setting:aux:bias' is the 'terrain type bias' in the map generator GUI."
+  ],
+  "property_expression_names":
+  {
+    "control-setting:moisture:frequency:multiplier": "1",
+    "control-setting:moisture:bias": "0",
+    "control-setting:aux:frequency:multiplier": "1",
+    "control-setting:aux:bias": "0"
+  },
+
+  "starting_points":
+  [
+    { "x": ${STARTING_POINTS_X}, "y": ${STARTING_POINTS_Y}}
+  ],
+
+  "_seed_comment": "Use null for a random seed, number for a specific seed.",
+  "seed": ${SEED}
+}
