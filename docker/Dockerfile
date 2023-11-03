@@ -1,7 +1,7 @@
 FROM frolvlad/alpine-glibc:alpine-3.12
 
 # Build vars
-ARG VERSION=1.1.69
+ARG VERSION=1.1.94
 ARG RETRIES=5
 ARG USER=factorio
 ARG GROUP=factorio
@@ -30,7 +30,6 @@ RUN set -ox pipefail \
         file \
         gettext \
         libintl \
-        python3 \
     && curl -sSL "https://factorio.com/get-download/${VERSION}\
 /headless/linux64" -o "$archive" --retry $RETRIES \
     && tar -xf "$archive" --directory /opt \
@@ -47,14 +46,16 @@ RUN set -ox pipefail \
     && addgroup -S "$GROUP" \
     && adduser -S -G "$GROUP" -s /bin/sh -h /factorio "$USER"
 
-COPY file/* /opt/factorio/
 COPY file/config.ini /factorio/config/config.ini
+COPY file/*.sh /opt/factorio/
+COPY file/*.template ${DATA}
 
-RUN chmod +x /opt/factorio/*.py \
+RUN chmod +x /opt/factorio/*.sh \
     && chown -R "$USER":"$GROUP" /factorio /opt/factorio
 
 USER ${USER}
 WORKDIR /factorio
 VOLUME /factorio
 EXPOSE ${PORT}/udp ${RCON_PORT}/tcp
-ENTRYPOINT ["/usr/bin/python3", "/opt/factorio/docker-entrypoint.py"]
+ENTRYPOINT ["/bin/bash"]
+#CMD ["/opt/factorio/entrypoint.sh"]

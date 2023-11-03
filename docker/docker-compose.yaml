@@ -10,12 +10,11 @@ services:
     volumes:
       - factorio:/factorio
     environment:
-      - GENERATE_NEW_SAVE=True
+      # - GENERATE_NEW_SAVE=True
+      - NAME=BunkerFactorio0
       - LOAD_LATEST_SAVE=False
       - SAVE_NAME=world
-      - GAME_PASSWORD=test
-      #- LOG_LEVEL=DEBUG
-      #- DEBUG=true
+      - GAME_PASSWORD=rage01
     # entrypoint: "tail -f /dev/null"
 volumes:
   factorio:
